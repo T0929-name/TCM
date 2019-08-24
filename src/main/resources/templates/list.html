@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <form action="like" method="post">
+            <p>姓名:<input type="text" name="name"/></p>
+            <input type="submit" value="查询"/>
+        </form>
+        <table border="1">
+            <tr>
+                <td>编号</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>年龄</td>
+                <td>等级</td>
+                <td>部门</td>
+                <td>生日</td>
+            </tr>
+            <tr th:each="person:${persons}">
+                <td><a th:href="@{find(id=${person['id']})}" th:text="${person['id']}"></a></td>
+                <td th:text="${person.name}"></td>
+                <td th:if="${person.gender} eq 0">男</td>
+                <td th:if="${person.gender} eq 1">女</td>
+                <td th:text="${person.age}"></td>
+                <td th:text="${person.rank}"></td>
+                <td th:text="${person.de.name}"></td>
+                <td th:text="${person.birthday}"></td>
+            </tr>
+
+        </table>
+</body>
+</html>

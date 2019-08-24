@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.UserMapper">
+
+	<resultMap type="Person" id="PerMap">
+		<id column="id" property="id"/>
+		<association property="de" javaType="Department">
+			<id column="did" property="id"></id>
+			<result property="name" column="dname"></result>
+		</association>
+	</resultMap>
+
+		<select id="findAll" resultMap="PerMap" parameterType="string">
+			select p.id,p.name,p.gender,p.age,p.rank,p.birthday,d.id did,d.name dname from person p inner join department d on p.did=d.id
+			<where>
+					<if test="p.name!=null and p.name!=''">
+							and name like concat('%'+#{p.name}+'%')
+					</if>
+			</where>
+
+		</select>
+		<select id="findByIdInfo" resultType="Person" parameterType="int">
+			select * from person where id=#{id}
+		</select>
+	<update id="update" parameterType="person">
+		update person set name=#{name},gender=#{gender},age=#{age},rank=#{rank},did=#{did},birthday=#{birthday} where id=#{id}
+
+	</update>
+</mapper>
